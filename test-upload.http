@@ -1,0 +1,17 @@
+POST http://localhost:3000/memories
+Content-Type: multipart/form-data
+
+--boundary
+Content-Disposition: form-data; name="title"
+
+Some title
+--boundary
+Content-Disposition: form-data; name="description"
+
+Some description
+--boundary
+Content-Disposition: form-data; name="image"; filename="pessoa1.jpeg"
+Content-Type: image/jpeg
+
+< "C:\Users\STEM - BEX\Downloads\pessoa1.jpeg"
+--boundary--
