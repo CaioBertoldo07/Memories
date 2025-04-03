@@ -4,14 +4,14 @@ Content-Type: multipart/form-data
 --boundary
 Content-Disposition: form-data; name="title"
 
-Some title
+Some title 2
 --boundary
 Content-Disposition: form-data; name="description"
 
-Some description
+Some description 2
 --boundary
 Content-Disposition: form-data; name="image"; filename="pessoa1.jpeg"
 Content-Type: image/jpeg
 
-< "C:\Users\STEM - BEX\Downloads\pessoa1.jpeg"
+< ""C:\Users\caiob\OneDrive\Imagens\(110) WhatsApp_files\a4bb9ffb-66ce-48a2-a261-f07363e2be14.jpg""
 --boundary--

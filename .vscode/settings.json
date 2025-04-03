@@ -1,0 +1,6 @@
+{
+    "workbench.iconTheme": "material-icon-theme",
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true
+}
