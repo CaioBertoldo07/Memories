@@ -69,7 +69,85 @@ const deleteMemory = async (req, res) => {
 
         removeOldImage(memory)
 
-        res.json({msg: "Memory deleted"})
+        res.json({ msg: "Memory deleted" })
+    } catch (error) {
+        res.status(500).send("There was an error!")
+    }
+}
+
+const updateMemory = async (req, res) => {
+    try {
+        const { title, description } = req.body
+        
+        let src = null
+
+        if (req.file) {
+            src = `images/${req.file.filename}`
+        }
+
+        const memory = await Memory.findById(req.params.id)
+
+        if (!memory) {
+            return res.status(404).json({ msg: "Memory not found!" })
+        }
+
+        if (src) {
+            removeOldImage(memory)
+        }
+
+        const updateData = {}
+
+        if (title) updateData.title = title
+        if (description) updateData.description = description
+        if (src) updateData.src = src
+
+        const updateMemory = await Memory.findByIdAndUpdate(req.params.id, updateData, { new: true })
+        
+        res.json({updateMemory, msg: "Memory updated successfully!"})
+    } catch (error) {
+        res.status(500).send("There was an error!")
+    }
+}
+
+const toggleFavorite = async (req, res) => {
+    try {
+        const memory = await Memory.findById(req.params.id)
+
+        if (!memory) {
+            return res.status(404).json({ msg: "Memory not found!" })
+        }
+
+        memory.favorite = !memory.favorite
+
+        await memory.save()
+
+        res.json({ msg: "Added to favorites" }, memory)
+    } catch (error) {
+        res.status(500).send("There was an error!")
+    }
+}
+
+const addComment = async (req, res) => {
+    try {
+        const { name, text } = req.body
+        
+        if (!name || !text) {
+            return res.status(400).json({ msg: "Please, fill in all fields." })
+        }
+
+        const comment = { name, text }
+
+        const memory = await Memory.findById(req.params.id)
+
+        if (!memory) {
+            return res.status(404).json({ msg: "Memory not found!" })
+        }
+
+        memory.comments.push(comment)
+
+        await memory.save()
+
+        res.json({ msg: "Comment added" }, memory)
     } catch (error) {
         res.status(500).send("There was an error!")
     }
@@ -80,4 +158,7 @@ module.exports = {
     getMemories,
     getMemory,
     deleteMemory,
+    updateMemory,
+    toggleFavorite,
+    addComment
 }
